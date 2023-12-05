@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { userRoutes } from './src/routes/userRoutes.js'
 import { jwtMiddleware } from './src/middleware/jwtMiddleware.js'
+import { authRoutes } from './src/routes/authRoutes.js'
 
 const app = express()
 const port = 3011
@@ -17,6 +18,8 @@ app.get('/test/me', (req, res) => { res.send('test') })
 app.use(jwtMiddleware)
 
 app.use('/users', userRoutes)
+
+app.use('/auth', authRoutes)
 
 
 app.listen(port, () => {

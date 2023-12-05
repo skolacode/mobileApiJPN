@@ -11,9 +11,5 @@
 
 // ES6 syntax
 export const jwtMiddleware = (req, res, next) => {
-  console.log('run before')
-  console.log('req.mobileApiUser before>> ', req.mobileApiUser)
-  req.mobileApiUser = "tech guy"
   next()
-  console.log('run after')
 }
