@@ -2,17 +2,7 @@ export class UserController {
 
   getUsers = (req, res) => {
 
-    const params = req.params
-    const paramName = params.name
-
-    console.log('params: ', params)
-    console.log('paramName: ', paramName)
-
-    const query = req.query
-    console.log('query: ', query)
-    const queryAge = query.age
-
-    console.log('this is queryAge value >> ', queryAge)
+    console.log('mobileApiUser: ', req.mobileApiUser)
 
     res.send("Hello JPN")
   }
