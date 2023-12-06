@@ -3,6 +3,9 @@ import { getAllApplicationsByDriverIDDB, getApplicationByDepartureOrArrivalDateD
 
 export class UserController {
   getApplications = (req, res) => {
+
+    console.log('authUser: ', req.authUser)
+
     const query = req.query
 
     const queryKey = Object.keys(query)[0]

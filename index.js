@@ -16,11 +16,11 @@ app.use(bodyParser.json())
 
 app.get('/test/me', (req, res) => { res.send('test') })
 
+app.use('/auth', authRoutes)
+
 app.use(jwtMiddleware)
 
 app.use('/user', userRoutes)
-
-app.use('/auth', authRoutes)
 
 app.use('/driver', driverRoutes)
 

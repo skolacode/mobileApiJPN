@@ -9,7 +9,43 @@
  * b. inject a attribute into request (req)
  */
 
+import jwt from 'jsonwebtoken'
+
 // ES6 syntax
 export const jwtMiddleware = (req, res, next) => {
+
+  // Validate the token
+  const auth = req.headers.authorization 
+
+  if(!auth) {
+    res.status(400).json({
+      error: "Token in Required",
+    })
+
+    return;
+  }
+
+  const token = auth.split(' ')[1]
+
+  jwt.verify(token, 'my-secret-code', (err, payload) => {
+    if(err) {
+      res.status(400).json({
+        error: "Token in invalid",
+        msg: "Please use a valid token"
+      })
+
+      return;
+    }
+
+    req.authUser = {
+      username: payload.username
+    }
+  })
+
+  /**
+   * auth = Bearer new_token
+   * ['Bearer', 'new_token']
+   */
+
   next()
 }
