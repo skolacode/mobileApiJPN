@@ -1,4 +1,4 @@
-import { endOfMonth, format, isValid } from "date-fns"
+import { endOfMonth, format } from "date-fns"
 import { getAllJobsByDriverIDDB, getJobByDepartureOrArrivalDateDB } from "../database/driverDatabase.js"
 
 export class DriverController {

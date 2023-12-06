@@ -1,31 +1,84 @@
+import { endOfMonth, format } from "date-fns"
+import { getAllApplicationsByDriverIDDB, getApplicationByDepartureOrArrivalDateDB } from "../database/userDatabase.js"
+
 export class UserController {
+  getApplications = (req, res) => {
+    const query = req.query
 
-  getUsers = (req, res) => {
+    const queryKey = Object.keys(query)[0]
 
-    console.log('mobileApiUser: ', req.mobileApiUser)
+    const queryValue = query[queryKey]
 
-    res.send("Hello JPN")
+    if(queryKey === 'month') {
+
+      const monthValue = parseInt(queryValue) || 0
+
+      const isNonValidMonth = monthValue < 1 || monthValue > 12
+
+      if(isNonValidMonth) {
+        res.status(400).json({
+          error: "Sila masukkan value yang betul",
+          msg: "value yang sah adalah 1 hingga 12"
+        })
+
+        return
+      }
+
+      getAllApplicationsByDriverIDDB(monthValue)
+    }
+
+    res.json({ msg: 'Get job success' })
   }
 
-  postUser = (req, res) => {
+  getApplicationByDepartureAndArrivalDate = (req,res) => {
 
-    const body = req.body
-    console.log('body >> ', body)
+    const query = req.query
+    const date = parseInt(query.date) || 0
+    const month = (parseInt(query.month) - 1) || -1
+    const year = parseInt(query.year) || 0
 
-    res.send({
-      msg: "Hi testing"
-    })
-  }
+    const isNonValidMonth = month < 0 || month > 11
 
-  putUser = (req, res) => {
-    res.send({
-      msg: "Hi Put Success"
-    })
-  }
+    if(isNonValidMonth) {
+      res.status(400).json({
+        error: "Sila masukkan value yang betul",
+        msg: "value yang sah adalah 1 hingga 12"
+      })
 
-  patchUser = (req, res) => {
-    res.send({
-      msg: "Hi Patch Success"
+      return
+    }
+
+    const currentYear = new Date().getFullYear()
+    const isNonValidYear = year < 2010 || year > currentYear
+
+    if(isNonValidYear) {
+      res.status(400).json({
+        error: "Sila masukkan value yang betul",
+        msg: `value yang sah adalah 2010 hingga ${currentYear}`
+      })
+
+      return
+    }
+
+    const dateMaxFull = endOfMonth(new Date(year, month, 1))
+    const maxDateOnly = dateMaxFull.getDate()
+    const isNonValidDate = date < 1 || date > maxDateOnly
+
+    if(isNonValidDate) {
+      res.status(400).json({
+        error: "Sila masukkan value yang betul",
+        msg: `value yang sah adalah 1 hingga ${maxDateOnly}`
+      })
+
+      return
+    }
+
+    const formatedDate = format(new Date(year, month, date), 'yyyy-MM-dd')
+
+    getApplicationByDepartureOrArrivalDateDB(formatedDate)
+
+    res.json({
+      msg: 'Job is fetched'
     })
   }
 }

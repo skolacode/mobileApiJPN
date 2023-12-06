@@ -18,7 +18,7 @@ app.get('/test/me', (req, res) => { res.send('test') })
 
 app.use(jwtMiddleware)
 
-app.use('/users', userRoutes)
+app.use('/user', userRoutes)
 
 app.use('/auth', authRoutes)
 
