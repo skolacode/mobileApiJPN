@@ -1,3 +1,5 @@
+import { getAllJobsByDriverIDDB } from "../database/driverDatabase.js"
+
 export class DriverController {
   getJobs = (req, res) => {
     const query = req.query
@@ -20,10 +22,9 @@ export class DriverController {
 
         return
       }
-    }
 
-    // query.month or query.sevenDays or query.fourtenDays
-    
+      getAllJobsByDriverIDDB(monthValue)
+    }
 
     res.json({ msg: 'Get job success' })
   }
