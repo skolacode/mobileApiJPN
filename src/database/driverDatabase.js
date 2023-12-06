@@ -23,3 +23,14 @@ export const getAllJobsByDriverIDDB = (month) => {
 
   return results
 }
+
+export const getJobByDepartureOrArrivalDateDB = (date) => {
+
+  console.log('date: ', date)
+
+  const SQL = `...query goes here`
+
+  const results = 'some results'
+
+  return results
+}
