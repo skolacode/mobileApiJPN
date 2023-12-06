@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import { userRoutes } from './src/routes/userRoutes.js'
 import { jwtMiddleware } from './src/middleware/jwtMiddleware.js'
 import { authRoutes } from './src/routes/authRoutes.js'
+import { driverRoutes } from './src/routes/driverRoutes.js'
 
 const app = express()
 const port = 3011
@@ -20,6 +21,8 @@ app.use(jwtMiddleware)
 app.use('/users', userRoutes)
 
 app.use('/auth', authRoutes)
+
+app.use('/driver', driverRoutes)
 
 
 app.listen(port, () => {
